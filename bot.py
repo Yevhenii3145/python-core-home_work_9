@@ -101,9 +101,11 @@ def get_handler(comand):
 
 
 def main():
-
+    launch = 0
     while True:
-        print("I'am a Bot")
+        if launch == 0:
+            print("I'am a Bot")
+            launch = 1
 
         user_input = input("Please input a comand: ")
         user_input = user_input.lower()
