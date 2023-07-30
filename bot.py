@@ -6,16 +6,14 @@ def input_error(func):
     def inner(list_of_request):
 
         if func.__name__ == "get_phone" and len(list_of_request) != 1:
-            print("DECORATOR Please just enter 1 arg: correct name of user")
+            print("DECORATOR Please just input 1 arg: correct name of user")
             print("DECORATOR Trye again")
-            exit  # здесь не сработал почему-то
             return
 
         if func.__name__ != "get_phone":
-            if len(list_of_request) < 2 or len(list_of_request) > 2:
+            if len(list_of_request) != 2:
                 print("DECORATOR Please enter 2 args: correct name and phone number")
                 print("DECORATOR Trye again")
-                exit  # здесь не сработал почему-то
                 return
 
             elif len(list_of_request) == 2:
@@ -49,12 +47,12 @@ def add_user(list_of_request):
 
     if PHONE_BOOK.get(name):
         raise ValueError(
-            f"User {name} already in phone book.Try another command or another name")
+            f"User '{name}' already in phone book.Try another command or another name")
 
     PHONE_BOOK.update({name: phone_num})
 
     print("add_user", PHONE_BOOK)
-    return f"In phone book added user {name} phone {phone_num}"
+    return f"In phone book added user '{name}' with phone '{phone_num}'"
 
 
 @input_error
@@ -65,22 +63,23 @@ def change_contact(list_of_request):
     if PHONE_BOOK.get(name):
         PHONE_BOOK[name] = phone_num
     else:
-        raise ValueError(f"User {name} is not in phone book")
+        raise ValueError(f"User '{name}' is not in phone book")
 
     print("change_contact", PHONE_BOOK)
-    return f"In phone book changed phone number of user {name} to {phone_num}"
+    return f"In phone book changed phone number of user '{name}' to '{phone_num}'"
 
 
 @input_error
 def get_phone(list_of_request):
     name = list_of_request[0]
 
-    try:
+    if PHONE_BOOK.get(name):
         target_num = PHONE_BOOK[name]
-        print("get_phone", target_num)
-        return f"Target phone number for user {name}  is {target_num}"
-    except ValueError as error:
-        print(f"User {name} is not in phone book.Er: {error}")
+    else:
+        raise ValueError(f"User '{name}' is not in phone book.")
+
+    print("get_phone", target_num)
+    return f"Target phone number for user '{name}'  is '{target_num}'"
 
 
 def show_all():
