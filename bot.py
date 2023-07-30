@@ -26,6 +26,7 @@ def input_error(func: typing.Callable) -> typing.Callable:
     return inner
 
 
+@input_error
 def say_hello() -> str:
     return "How can I help you?"
 
@@ -64,6 +65,7 @@ def get_phone(name: str) -> str:
     return f"Target phone number for user '{name}'  is '{target_num}'"
 
 
+@input_error
 def show_all() -> str:
     return f"show_all {PHONE_BOOK}"
 
@@ -94,8 +96,12 @@ def main() -> None:
 
         if "show all" in user_input:
             comand = "show all"
+            request_data = user_input.replace("show all","").strip().split(" ")
+            if request_data == [""]:
+                request_data = []
+
             handler = get_handler(comand)
-            print(handler())
+            print(handler(*request_data))
             continue
 
         elif "good bye" in user_input:
