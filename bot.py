@@ -84,13 +84,9 @@ def get_handler(comand: str) -> typing.Callable:
 
 
 def main() -> None:
-    launch = 0
+    print("I'am a Bot")
 
     while True:
-        if launch == 0:
-            print("I'am a Bot")
-            launch = 1
-
         user_input = input("Please input a comand: ")
         user_input = user_input.lower()
 
